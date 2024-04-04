@@ -38,13 +38,13 @@ public class WeatherApplication extends Application {
 
         Scene scene = new Scene(gridPane, 500, 300);
 
-        gridPane.getChildren().addAll(location, temp, h, l, search, searchField, desc, descInfo, forecast,forecastBox);
+        gridPane.getChildren().addAll(location, temp, h, l, search, searchField, desc, descInfo, forecast, forecastBox);
 
         stage.setTitle("Weather");
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
