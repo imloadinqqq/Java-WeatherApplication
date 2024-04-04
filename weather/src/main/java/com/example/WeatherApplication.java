@@ -36,6 +36,17 @@ public class WeatherApplication extends Application {
         forecastBox.setHeight(50);
         forecastBox.setWidth(150);
 
+        GridPane.setConstraints(location, 0, 0);
+        GridPane.setConstraints(temp, 1, 0);
+        GridPane.setConstraints(h, 2, 0);
+        GridPane.setConstraints(l, 3, 0);
+        GridPane.setConstraints(search, 4, 0);
+        GridPane.setConstraints(searchField, 5, 0);
+        GridPane.setConstraints(desc, 0, 1);
+        GridPane.setConstraints(descInfo, 1, 1);
+        GridPane.setConstraints(forecast, 2, 1);
+        GridPane.setConstraints(forecastBox, 3, 1);
+
         Scene scene = new Scene(gridPane, 500, 300);
 
         gridPane.getChildren().addAll(location, temp, h, l, search, searchField, desc, descInfo, forecast, forecastBox);
