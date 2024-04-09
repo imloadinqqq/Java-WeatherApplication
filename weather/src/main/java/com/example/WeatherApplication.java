@@ -1,10 +1,13 @@
 package com.example;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -54,6 +57,16 @@ public class WeatherApplication extends Application {
         stage.setTitle("Weather");
         stage.setScene(scene);
         stage.show();
+
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String location = searchField.getText();
+                String weather = ApiHandler.getWeather(location);
+                System.out.println(weather);
+            }
+        });
     }
 
     public static void main(String[] args) {
