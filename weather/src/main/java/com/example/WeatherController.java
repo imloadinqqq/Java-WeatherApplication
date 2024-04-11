@@ -13,6 +13,9 @@ public class WeatherController {
     private TextField locationField;
 
     @FXML
+    private Label locationLabel;
+
+    @FXML
     private Label weatherLabel;
 
     @FXML
@@ -25,7 +28,9 @@ public class WeatherController {
             String weatherData = ApiHandler.getWeatherData(location);
             JSONObject weatherJson = new JSONObject(weatherData);
             int temperature = weatherJson.getJSONObject("current").getInt("temperature");
+            String region = weatherJson.getJSONObject("location").getString("region");
             weatherLabel.setText("Temperature: " + temperature);
+            locationLabel.setText("Location: " + location + ", " + region);
         } catch (Exception e) {
             e.printStackTrace();
         }

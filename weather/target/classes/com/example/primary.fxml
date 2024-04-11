@@ -8,5 +8,6 @@
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.WeatherController">
     <TextField fx:id="locationField" />
     <Button fx:id="searchButton" text="Search" onAction="#searchWeather" />
+    <Label fx:id="locationLabel" />
     <Label fx:id="weatherLabel" />
 </VBox>
