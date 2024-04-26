@@ -3,11 +3,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.ImageView?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.WeatherController">
-    <TextField fx:id="locationField" />
-    <Button fx:id="searchButton" text="Search" onAction="#searchWeather" />
-    <Label fx:id="locationLabel" />
-    <Label fx:id="weatherLabel" />
-</VBox>
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.WeatherController" fx:id="gridPane">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <TextField fx:id="locationField" GridPane.rowIndex="0" />
+    <Button fx:id="searchButton" text="Search" onAction="#searchWeather" GridPane.rowIndex="1" />
+    <Label fx:id="locationLabel" GridPane.rowIndex="2" />
+    <Label fx:id="weatherLabel" GridPane.rowIndex="3" />
+    <Label fx:id="realFeelLabel" GridPane.rowIndex="4" />
+    <ImageView fx:id="weatherIcon" GridPane.rowIndex="5" />
+    <Label fx:id="weatherDescriptionLabel" GridPane.rowIndex="6" />
+</GridPane>

@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
 public class ApiHandler {
 
     private static final String API_URL = "http://api.weatherstack.com/current?access_key=3599e22e5bc1eb0475e72c6bce3995a7&query=";
-    private static final int THREAD_COUNT = 10; // Adjust as needed
+    private static final int THREAD_COUNT = 10;
 
     public static String getWeatherData(String location) {
         String urlString = API_URL + location;
@@ -47,8 +47,6 @@ public class ApiHandler {
             futures.add(future);
         }
 
-        executor.shutdown();
-
         List<String> results = new ArrayList<>();
         for (Future<String> future : futures) {
             try {
@@ -57,6 +55,8 @@ public class ApiHandler {
                 e.printStackTrace();
             }
         }
+
+        executor.shutdown();
 
         return results;
     }
