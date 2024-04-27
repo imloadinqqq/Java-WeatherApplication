@@ -47,15 +47,15 @@ public class WeatherController {
 
 
     // finish this
-    public void changeBackgroundColor(String weatherDesc) {
-        if (weatherDesc.equals("Sunny")) {
-            gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(150, 180, 228), null, null)));
-        } else if (weatherDesc.equals("Partly cloudy")){
-            gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(150, 180, 228), null, null)));
-        } else {
-            gridPane.setBackground(new Background(new BackgroundFill((Color.ALICEBLUE), null, null)));
-        }
-    }
+//    public void changeBackgroundColor(String weatherDesc) {
+//        if (weatherDesc.equals("Sunny")) {
+//            gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(150, 180, 228), null, null)));
+//        } else if (weatherDesc.equals("Partly cloudy")){
+//            gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(150, 180, 228), null, null)));
+//        } else {
+//            gridPane.setBackground(new Background(new BackgroundFill((Color.ALICEBLUE), null, null)));
+//        }
+//    }
 
     @FXML
     public void searchWeather(ActionEvent event) {
@@ -83,7 +83,7 @@ public class WeatherController {
                 weatherIcon.setImage(new Image(iconUrl));
                 weatherDescriptionLabel.setText(description);
 
-                changeBackgroundColor(description);
+//                changeBackgroundColor(description);
             }
 
 
