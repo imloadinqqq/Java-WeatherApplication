@@ -16,6 +16,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
+import java.sql.*;
+
 public class WeatherController {
 
     @FXML
