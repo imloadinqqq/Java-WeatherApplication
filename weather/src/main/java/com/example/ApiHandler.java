@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
-import java.util.HashMap;
 
 public class ApiHandler {
 
@@ -34,7 +33,7 @@ public class ApiHandler {
     }
 
     // Retrieve weather data either from cache, database, or API
-    public static String getWeatherData(String location) throws Exception{
+    public static String getWeatherData(String location) {
         long startTime = System.currentTimeMillis();
 
         // If data not found in cache, try fetching from database
@@ -108,7 +107,7 @@ public class ApiHandler {
     public static void storeWeatherData(String location, String weatherData) {
         // Store new data in database if it doesn't already exist
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=Sirsonic1234");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=");
 
             // Check if location already exists in the database
             PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM cache WHERE location = ?");
@@ -118,7 +117,8 @@ public class ApiHandler {
             int count = rs.getInt(1);
             checkStmt.close();
 
-            if (count == 0) { // If location doesn't exist, insert new record
+            // If location doesn't exist, insert new record
+            if (count == 0) {
                 // Insert new record
                 PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO cache (location, weatherData) VALUES (?, ?)");
                 insertStmt.setString(1, location);
@@ -126,6 +126,7 @@ public class ApiHandler {
                 insertStmt.executeUpdate();
                 System.out.println("New data stored in the database for location: " + location + "\n");
             } else {
+                // Location does exist then fetch the database info
                 fetchWeatherDataFromDatabase(location);
                 System.out.println("Existing data retrieved for location: " + location + "\n");
             }
