@@ -1,0 +1,3 @@
+"jdbc:mysql://localhost:3306/weather?user=root&password=Sirsonic1234"
+
+3599e22e5bc1eb0475e72c6bce3995a7
