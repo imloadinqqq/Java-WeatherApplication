@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
@@ -15,8 +14,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
-
-import java.sql.*;
 
 public class WeatherController {
 
@@ -39,19 +36,18 @@ public class WeatherController {
     private Label weatherDescriptionLabel;
 
     @FXML
-    private Button searchButton;
-
-    @FXML
     private GridPane gridPane;
 
     
     @FXML
-    public void searchWeather(ActionEvent event) {
+    public void searchWeather() {
         try {
+            // getting weather data to populate fields
             String location = locationField.getText();
             String weatherData = ApiHandler.getWeatherData(location);
             JSONObject weatherJson = new JSONObject(weatherData);
 
+            // values from getters
             int temperature = getTemperature(weatherJson);
             int realFeel = getRealFeel(weatherJson);
             String iconUrl = getIconUrl(weatherJson);
@@ -74,12 +70,30 @@ public class WeatherController {
         }
     }
 
+    // function to change background
+    public void changeBackgroundColor(Image image) {
+        // Get the color of a specific pixel
+        PixelReader pixelReader = image.getPixelReader();
+        // 1,1 pixel sets the color of the background
+        Color color = pixelReader.getColor(1, 1);
+
+        // Change the background color
+        BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        Background background = new Background(backgroundFill);
+        gridPane.setBackground(background);
+    }
+
+    // getters
     private int getTemperature(JSONObject weatherJson) {
-        return weatherJson.getJSONObject("current").getInt("temperature");
+        int temperatureCelsius = weatherJson.getJSONObject("current").getInt("temperature");
+        return (int) (temperatureCelsius * 9.0 / 5.0 + 32);
+
     }
 
     private int getRealFeel(JSONObject weatherJson) {
-        return weatherJson.getJSONObject("current").getInt("feelslike");
+        int temperatureCelsius = weatherJson.getJSONObject("current").getInt("feelslike");
+        return (int) (temperatureCelsius * 9.0 / 5.0 + 32);
+
     }
 
     private String getIconUrl(JSONObject weatherJson) {
@@ -96,16 +110,5 @@ public class WeatherController {
         String city = weatherJson.getJSONObject("location").getString("name");
         String region = weatherJson.getJSONObject("location").getString("region");
         return city + ", " + region;
-    }
-
-    public void changeBackgroundColor(Image image) {
-        // Get the color of a specific pixel
-        PixelReader pixelReader = image.getPixelReader();
-        Color color = pixelReader.getColor(1, 1); // replace xCoordinate and yCoordinate with your coordinates
- 
-        // Change the background color
-        BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(backgroundFill);
-        gridPane.setBackground(background); // replace gridPane with your GridPane object
     }
 }

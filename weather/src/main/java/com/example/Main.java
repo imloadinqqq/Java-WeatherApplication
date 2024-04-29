@@ -6,24 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
+import java.io.IOException;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws IOException {
         ApiHandler.initializeDatabase();
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("primary.fxml"));
-            primaryStage.setTitle("Weather App");
-            primaryStage.setScene(new Scene(root, 500, 500));
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Parent root = FXMLLoader.load(getClass().getResource("primary.fxml"));
+        primaryStage.setTitle("Weather App");
+        primaryStage.setScene(new Scene(root, 400, 400));
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

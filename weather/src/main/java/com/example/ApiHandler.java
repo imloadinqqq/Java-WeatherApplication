@@ -9,13 +9,12 @@ import java.util.HashMap;
 
 public class ApiHandler {
 
-    private static final String API_URL = "http://api.weatherstack.com/current?access_key=3599e22e5bc1eb0475e72c6bce3995a7&query=";
-    private static final HashMap<String, String> cache = new HashMap<>();
+    private static final String API_URL = "http://api.weatherstack.com/current?access_key=&query=";
 
     // Initialize the database with a new cache table
     public static void initializeDatabase() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=Sirsonic1234");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=&password=");
 
             // Drop existing cache table if it exists
             PreparedStatement dropTableStmt = conn.prepareStatement("DROP TABLE IF EXISTS cache");
@@ -28,20 +27,19 @@ public class ApiHandler {
             System.out.println("New cache table created");
 
             conn.close();
-            System.out.println("Database initialized successfully");
+            System.out.println("Database initialized successfully\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     // Retrieve weather data either from cache, database, or API
-    public static String getWeatherData(String location) {
+    public static String getWeatherData(String location) throws Exception{
         long startTime = System.currentTimeMillis();
 
         // If data not found in cache, try fetching from database
         String weatherDataFromDB = fetchWeatherDataFromDatabase(location);
         if (weatherDataFromDB != null) {
-            cache.put(location, weatherDataFromDB); // Cache the data
             long endTime = System.currentTimeMillis();
             System.out.println("Database retrieval time: " + (endTime - startTime) + " ms");
             return weatherDataFromDB;
@@ -49,7 +47,6 @@ public class ApiHandler {
 
         // If data not found in database, fetch from API
         String weatherDataFromAPI = fetchWeatherDataFromAPI(location);
-        cache.put(location, weatherDataFromAPI); // Cache the data from the API
         long endTime = System.currentTimeMillis();
         System.out.println("API retrieval time: " + (endTime - startTime) + " ms");
         return weatherDataFromAPI;
@@ -88,16 +85,16 @@ public class ApiHandler {
     // Fetch weather data from the database
     private static String fetchWeatherDataFromDatabase(String location) {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=Sirsonic1234");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=&password=");
 
             PreparedStatement pstmt = conn.prepareStatement("SELECT weatherData FROM cache WHERE location = ?");
             pstmt.setString(1, location);
             ResultSet rs = pstmt.executeQuery();
 
+            // Fetching information from result set
             if (rs.next()) {
                 String weatherData = rs.getString("weatherData");
                 conn.close();
-                System.out.println("Weather data retrieved from database for location: " + location);
                 return weatherData;
             }
         } catch (SQLException e) {
@@ -109,9 +106,6 @@ public class ApiHandler {
 
     // Store weather data in cache and database
     public static void storeWeatherData(String location, String weatherData) {
-        // Store new data in cache
-        cache.put(location, weatherData);
-
         // Store new data in database if it doesn't already exist
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=Sirsonic1234");
@@ -130,10 +124,10 @@ public class ApiHandler {
                 insertStmt.setString(1, location);
                 insertStmt.setString(2, weatherData);
                 insertStmt.executeUpdate();
-                System.out.println("New data stored in the database for location: " + location);
+                System.out.println("New data stored in the database for location: " + location + "\n");
             } else {
                 fetchWeatherDataFromDatabase(location);
-                System.out.println("Existing data retrieved for location: " + location);
+                System.out.println("Existing data retrieved for location: " + location + "\n");
             }
 
             conn.close();
