@@ -13,7 +13,10 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class WeatherController {
 
@@ -55,8 +58,8 @@ public class WeatherController {
             String region = getRegion(weatherJson);
 
             // Setting values to labels and image
-            weatherLabel.setText("Temperature: " + temperature);
-            realFeelLabel.setText("Real Feel: " + realFeel);
+            weatherLabel.setText("Temperature: " + temperature + "F");
+            realFeelLabel.setText("Real Feel: " + realFeel + "F");
             weatherDescriptionLabel.setText("Description: " + description);
             locationLabel.setText("Location: " + region);
             weatherIcon.setImage(new Image(iconUrl));

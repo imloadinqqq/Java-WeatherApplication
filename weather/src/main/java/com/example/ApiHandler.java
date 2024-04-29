@@ -13,7 +13,7 @@ public class ApiHandler {
     // Initialize the database with a new cache table
     public static void initializeDatabase() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=&password=");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=");
 
             // Drop existing cache table if it exists
             PreparedStatement dropTableStmt = conn.prepareStatement("DROP TABLE IF EXISTS cache");
@@ -84,7 +84,7 @@ public class ApiHandler {
     // Fetch weather data from the database
     private static String fetchWeatherDataFromDatabase(String location) {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=&password=");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=");
 
             PreparedStatement pstmt = conn.prepareStatement("SELECT weatherData FROM cache WHERE location = ?");
             pstmt.setString(1, location);
@@ -107,7 +107,7 @@ public class ApiHandler {
     public static void storeWeatherData(String location, String weatherData) {
         // Store new data in database if it doesn't already exist
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weather?user=root&password=");
 
             // Check if location already exists in the database
             PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM cache WHERE location = ?");
